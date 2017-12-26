@@ -2,7 +2,9 @@
 
 This guide goes through the needed steps to provide Moyasar Invoices in Wix website.
 
-This is useful for entities who are interested in simple invoicing solution such as donation systems.
+This is useful for entities who are interested in using invoicing solutions such as a donation system.
+
+Please ensure to enable Developer tools in Wix prior proceeding with the following steps:
 
 
 ## 1. Set up Form Input with Validation
@@ -25,6 +27,9 @@ In addition, Add another UI button to submit the data for the invoice generation
 
 ## 2. Add Invoice Generation Code into Web Module
 
+- Create new file in backend section of site with name `invoicesModule.jsw`.
+- Copy `moyasar-invoices-app.js` file here to the newly created module in Wix backedn.
+- Ensure to specifiy client secret key at the very first line in code using `clientSecretKey` varibale.
 
 
 ## 3. Interact via Front-End with Web Module and Finalize Process
