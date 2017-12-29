@@ -6,23 +6,20 @@
  * @filename: moyasar-frontend-ui.js
  * @author: Abdullah Barrak (Moyasar Team).
  *
- *  All rights reserved – (2017)
+ *  All rights reserved – (2017).
  */
 
- import wixWindow from 'wix-window';
- import {local, session} from 'wix-storage';
+import wixWindow from 'wix-window';
+import {local, session} from 'wix-storage';
+import {obtainInvoiceForUser} from 'backend/invoicesModule';
 
- import {obtainInvoiceForUser} from 'backend/invoicesModule';
+var context = { invoiceCreated: false };
 
-
- var context = { invoiceCreated: false };
-
-
- $w.onReady(function () {
+$w.onReady(function () {
   loadUI();
 });
 
- function loadUI () {
+function loadUI () {
   context.nameField           = $w("#invoiceName");
   context.amountField         = $w("#invoiceAmount");
   context.generateBtn         = $w("#openInvoice");
@@ -57,30 +54,29 @@ export function makeInvoice() {
 
   if (context.invoiceCreated) {
     invoice = getExistingInvoice();
+    if (invoice)
+      presentInvoiceToUser(invoice);
   }
 
   if (!invoice) {
-    invoice = obtainInvoiceForUser($w("#invoiceAmount").value * 100, 'Created via Wix ~').then((json) => {
-      return json;
+    obtainInvoiceForUser($w("#invoiceAmount").value * 100, 'Created via Wix ~').then((json) => {
+      context.invoiceCreated = true;
+      context.invoice = json;
+      presentInvoiceToUser(json);
     }).catch(err => console.log(err));
-
-    context.invoiceCreated = true;
-    context.invoice = invoice;
   }
-
-  presentInvoiceToUser(invoice);
 }
 
 function getExistingInvoice() {
   return null;
 }
 
-// Decide how upon client requirements
+// Decide how to show invoice upon client requirements
+// This is for simple button enabling and assigment of link property to the invoice url.
 function presentInvoiceToUser(invoice) {
+  context.invoiceLink.link = invoice.url;
   context.invoiceLink.show();
-  context.invoiceLink.link = invoice['url'];
 }
-
 
 export function invoiceAmount_keyPress(event, $w) {
   validateInvoiceData();
