@@ -11,7 +11,7 @@
 
 import wixWindow from 'wix-window';
 import {local, session} from 'wix-storage';
-import {obtainInvoiceForUser} from 'backend/invoicesModule';
+import {obtainInvoiceForUser} from 'backend/moyasarInvoicesModule';
 
 var context = { invoiceCreated: false };
 
