@@ -11,14 +11,17 @@
 
 import {fetch} from 'wix-fetch';
 
+
 /**
  * Change for client secret API Key ..
  */
 let clientSecretKey = '';
 
+
 //
 // Base64 encoding & decoding are built-in in JS and Node.
 // Unfortunately, they're not available on Wix.
+//
 // These functions are polyfill for it.
 //
 // Ported from: https://stackoverflow.com/a/246813
@@ -129,7 +132,7 @@ class apiClient {
   }
 
   createInvoice(amount, description = '', curreny = 'SAR') {
-    var params = { 'amount': amount, 'description': description, 'currency': curreny };
+    let params = { 'amount': amount, 'description': description, 'currency': curreny };
 
     return this.makeRequest('/invoices', 'POST', params);
   }
@@ -139,7 +142,7 @@ class apiClient {
   }
 
   updateInvoice(id, amount, description, curreny = 'SAR') {
-    var params = { 'amount': amount, 'description': description, 'currency': curreny };
+    let params = { 'amount': amount, 'description': description, 'currency': curreny };
 
     return this.makeRequest('/invoices' + id.toString(), 'PUT', params);
   }
@@ -167,29 +170,30 @@ Resources.initialize();
 
 
 //
-// The only exposed Method for front end.
-// It gives back new or refreshed invoice according to provided attributes.
+// The only exposed method for front end.
+// It gives back a new or refreshed invoice according to provided attributes.
 //
 export function obtainInvoiceForUser(amount, description, invoiceId = null) {
   let client = new apiClient(clientSecretKey);
 
-  if (!invoiceId)
-    return client.createInvoice(amount, description);
-
-  let findResponse = client.findInvoice(invoiceId).then((json) => {
-    return json;
-  }).catch((error) => { return error; });
+  if (invoiceId) {
+    let findResponse = client.findInvoice(invoiceId).then((json) => {
+      return json;
+    }).catch((error) => { return error; });
 
 
-  if (findResponse && !findResponse['type']) {
-    let invoice = findResponse;
+    // when find resulted in existing invoice, match its data by update in case they differ.
+    //
+    if (findResponse && findResponse.type === undefined) {
+      let invoice = findResponse;
 
-    if (client.isInvoicePaid(invoice))
-      return client.createInvoice(amount, description);
-    else if (client.isInvoiceDataIdentical(invoice, amount, description))
-      return invoice;
-    else
-      return client.updateInvoice(invoice['id'], amount, description);
+      if (!client.isInvoicePaid(invoice)) {
+        if (client.isInvoiceDataIdentical(invoice, amount, description))
+          return invoice;
+        else
+          return client.updateInvoice(invoice['id'], amount, description);
+      }
+    }
   }
 
   return client.createInvoice(amount, description);
