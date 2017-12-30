@@ -2,22 +2,31 @@
  * Moyasar Invoices UI Code for Wix
  * ---------------------------------
  *
- * @description: A Wix scripts to launch and prepare the invoice generation interface.
+ * @description: A Wix script to launch and prepare the invoice generation interface.
  * @filename: moyasar-frontend-ui.js
  * @author: Abdullah Barrak (Moyasar Team).
  *
  *  All rights reserved – (2017).
  */
 
-import wixWindow from 'wix-window';
-import {local, session} from 'wix-storage';
+
+import {local} from 'wix-storage';
 import {obtainInvoiceForUser} from 'backend/moyasarInvoicesModule';
 
-var context = { invoiceCreated: false };
+var context = {
+  invoiceExsits: false,
+  invoice: null
+};
 
 $w.onReady(function () {
   loadUI();
+  defineTranslations();
 });
+
+
+/**
+ *  UI Setup and Validation
+ */
 
 function loadUI () {
   context.nameField           = $w("#invoiceName");
@@ -28,8 +37,19 @@ function loadUI () {
   context.invoiceLink         = $w("#invoiceLink");
 }
 
+function defineTranslations() {
+  context.resources = {
+    en: {
+      error: 'Error',
+    },
 
-export function validateInvoiceData() {
+    ar: {
+      error: 'خطأ',
+    }
+  };
+}
+
+function validateInvoiceData() {
   let isNameValid = context.nameField.valid;
   let isAmountValid = context.amountField.valid;
 
@@ -43,11 +63,20 @@ export function validateInvoiceData() {
   isAmountValid ? context.amountValidationMsg.hide() : context.amountValidationMsg.show();
 }
 
-export function openInvoice_click(event, $w) {
-  makeInvoice();
+function getNormalizedAmount() {
+  return $w("#invoiceAmount").value * 100;
 }
 
-export function makeInvoice() {
+function getDescription() {
+  return 'Donation Invoice for ' +  context.nameField.value + ' - Charity Organization';
+}
+
+
+/**
+ *  Invoice Generation Processing
+ */
+
+function makeInvoice() {
   // When it's already available, fetch it from cache or browser local storage.
   // Also, ensure it's paid or updated to latest data prior presenting it to the user.
   var invoice = null;
@@ -78,6 +107,15 @@ function presentInvoiceToUser(invoice) {
   context.invoiceLink.show();
 }
 
+
+/**
+ *  Event Handlers
+ */
+
 export function invoiceAmount_keyPress(event, $w) {
   validateInvoiceData();
+}
+
+export function openInvoice_click(event, $w) {
+  makeInvoice();
 }
