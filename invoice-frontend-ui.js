@@ -76,28 +76,26 @@ function getDescription() {
  *  Invoice Generation Processing
  */
 
-function makeInvoice() {
-  // When it's already available, fetch it from cache or browser local storage.
-  // Also, ensure it's paid or updated to latest data prior presenting it to the user.
-  var invoice = null;
+function getExistingOrNewInvoice() {
+  // When it's already available, fetch it from current app/local cache storage,
+  // ensuring it's not paid & updated to latest data.
+  // Useful for multiple clicks, revisiting user, etc.
+  //
+  // Otherwise, bring new one from API.
+  //
+  let description = getDescription();
+  let amount = getNormalizedAmount();
 
-  if (context.invoiceCreated) {
-    invoice = getExistingInvoice();
-    if (invoice)
-      presentInvoiceToUser(invoice);
-  }
+  let id = context.invoiceExsits ? context.invoice.id : local.getItem('moyasar_invoice_id');
 
-  if (!invoice) {
-    obtainInvoiceForUser($w("#invoiceAmount").value * 100, 'Created via Wix ~').then((json) => {
-      context.invoiceCreated = true;
-      context.invoice = json;
-      presentInvoiceToUser(json);
-    }).catch(err => console.log(err));
-  }
-}
+  obtainInvoiceForUser(amount, description, id || null).then((json) => {
+    context.invoiceExsits = true;
+    context.invoice = json;
+    local.setItem('moyasar_invoice_id', json['id']);
+    console.log('~ returning -> ' + json + ' ....');
 
-function getExistingInvoice() {
-  return null;
+    presentInvoiceToUser(json);
+  }).catch(error => reportErrorModally(error));
 }
 
 // Decide how to show invoice upon client requirements
@@ -107,6 +105,10 @@ function presentInvoiceToUser(invoice) {
   context.invoiceLink.show();
 }
 
+// When troubles strikes, show the error message from API/backend-module to the user.
+function reportErrorModally(error) {
+  console.log("ERROR REPORTER: \n" + error);
+}
 
 /**
  *  Event Handlers
@@ -117,5 +119,5 @@ export function invoiceAmount_keyPress(event, $w) {
 }
 
 export function openInvoice_click(event, $w) {
-  makeInvoice();
+  getExistingOrNewInvoice();
 }

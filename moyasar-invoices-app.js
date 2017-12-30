@@ -167,24 +167,27 @@ Resources.initialize();
 // The only exposed method for front end.
 // It gives back a new or refreshed invoice according to provided attributes.
 //
-export function obtainInvoiceForUser(amount, description, invoiceId = null) {
+export function obtainInvoiceForUser(amount, description, idToFetch) {
   let client = new apiClient(clientSecretKey);
 
-  if (invoiceId) {
-    let findResponse = client.findInvoice(invoiceId).then((json) => {
-      return json;
-    }).catch((error) => { return error; });
+  if (idToFetch) {
+    console.log('its inside despite it is: ');
+    console.log(idToFetch);
 
-    // when find resulted in existing non paid invoice,
-    // match its data by update in case they differ.
-    if (findResponse && !findResponse.type && !findResponse.message) {
-      let invoice = findResponse;
+    client.findInvoice(idToFetch).then((json) => {
+      // when find resulted in existing non paid invoice,
+      // match its data by update in case they differ.
+      if (json && !json.type && !json.message) {
+          let invoice = json;
+          console.log('invoice prior update');
+          console.log(invoice);
 
-      if (!client.isInvoicePaid(invoice)) {
-        let isIdentical = client.isInvoiceDataIdentical(invoice, amount, description);
-        return (isIdentical ? invoice : client.updateInvoice(invoice.id, amount, description));
+        if (!client.isInvoicePaid(invoice)) {
+          let isIdentical = client.isInvoiceDataIdentical(invoice, amount, description);
+          return (isIdentical ? invoice : client.updateInvoice(invoice.id, amount, description));
+        }
       }
-    }
+    }).catch((error) => { return error; });
   }
 
   return client.createInvoice(amount, description);
