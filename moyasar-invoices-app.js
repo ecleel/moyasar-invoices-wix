@@ -100,10 +100,7 @@ class Resources {
   }
 
   static t(key) {
-    if (this.lang === 'en')
-      return this.en[key];
-    else
-      return this.ar[key];
+    return this.lang === 'en' ? this.en[key] : this.ar[key];
   }
 }
 
@@ -125,9 +122,9 @@ class apiClient {
 
       if (httpResponse.ok) {
         return jsonResponse;
-      } else {
-        return Promise.reject(jsonResponse['message'] || Resources.t('generic_failure_message'));
       }
+
+      return Promise.reject(jsonResponse['message'] || Resources.t('generic_failure_message'));
     });
   }
 
@@ -156,12 +153,9 @@ class apiClient {
   }
 
   isInvoiceDataIdentical(invoice, amount, description) {
-    return invoice['amount'] == amount && invoice['description'] == description;
+    return invoice['amount'] === amount && invoice['description'] === description;
   }
 }
-
-
-
 
 //
 // Start application
@@ -181,17 +175,14 @@ export function obtainInvoiceForUser(amount, description, invoiceId = null) {
       return json;
     }).catch((error) => { return error; });
 
-
-    // when find resulted in existing invoice, match its data by update in case they differ.
-    //
-    if (findResponse && findResponse.type === undefined) {
+    // when find resulted in existing non paid invoice,
+    // match its data by update in case they differ.
+    if (findResponse && !findResponse.type && !findResponse.message) {
       let invoice = findResponse;
 
       if (!client.isInvoicePaid(invoice)) {
-        if (client.isInvoiceDataIdentical(invoice, amount, description))
-          return invoice;
-        else
-          return client.updateInvoice(invoice['id'], amount, description);
+        let isIdentical = client.isInvoiceDataIdentical(invoice, amount, description);
+        return (isIdentical ? invoice : client.updateInvoice(invoice.id, amount, description));
       }
     }
   }
