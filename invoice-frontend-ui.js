@@ -6,7 +6,7 @@
  * @filename: moyasar-frontend-ui.js
  * @author: Abdullah Barrak (Moyasar Team).
  *
- *  All rights reserved – (2017).
+ *  All rights reserved. (2017 - 2018)
  */
 
 
@@ -92,8 +92,6 @@ function getExistingOrNewInvoice() {
     context.invoiceExsits = true;
     context.invoice = json;
     local.setItem('moyasar_invoice_id', json['id']);
-    console.log('~ returning -> ');
-    console.log(json);
 
     presentInvoiceToUser(json);
   }).catch(error => reportErrorModally(error));
@@ -108,7 +106,7 @@ function presentInvoiceToUser(invoice) {
 
 // When troubles strikes, show the error message from API/backend-module to the user.
 function reportErrorModally(error) {
-  console.log("ERROR REPORTER: \n" + error);
+  console.log("[System Error Reporter]: \n" + error);
 }
 
 /**

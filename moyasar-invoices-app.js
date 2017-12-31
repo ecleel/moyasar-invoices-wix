@@ -124,7 +124,7 @@ class apiClient {
 
   createInvoice(amount, description = '', curreny = 'SAR') {
     let params = { 'amount': amount, 'description': description, 'currency': curreny };
-  console.log('HERE in create !');
+
     return this.makeRequest('/invoices', 'POST', params);
   }
 
@@ -166,22 +166,13 @@ export function obtainInvoiceForUser(amount, description, idToFetch) {
   let invoiceId = idToFetch || false;
 
   if (invoiceId) {
-    console.log('its inside despite it is: ');
-    console.log(idToFetch);
-
     return client.findInvoice(invoiceId).then((json) => {
-      console.log(invoiceId);
-      console.log(json);
       let invoice = json;
 
       // when find resulted in existing non paid invoice,
       // match its data by update in case they differ.
       if (invoice && !invoice.type && !invoice.message) {
-          console.log('invoice prior update');
-          console.log(invoice);
-
         if (!client.isInvoicePaid(invoice)) {
-          console.log('Not Paid .. updating ...');
           let isIdentical = client.isInvoiceDataIdentical(invoice, amount, description);
           return (isIdentical ? invoice : client.updateInvoice(invoice.id, amount, description));
         } else {
