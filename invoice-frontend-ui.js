@@ -92,7 +92,8 @@ function getExistingOrNewInvoice() {
     context.invoiceExsits = true;
     context.invoice = json;
     local.setItem('moyasar_invoice_id', json['id']);
-    console.log('~ returning -> ' + json + ' ....');
+    console.log('~ returning -> ');
+    console.log(json);
 
     presentInvoiceToUser(json);
   }).catch(error => reportErrorModally(error));

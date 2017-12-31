@@ -118,30 +118,24 @@ class apiClient {
     let bodyParams = params ? JSON.stringify(params) : '';
 
     return fetch(fullUrl, { method: method, body: bodyParams, headers: headers }).then((httpResponse) => {
-      let jsonResponse = httpResponse.json();
-
-      if (httpResponse.ok) {
-        return jsonResponse;
-      }
-
-      return Promise.reject(jsonResponse['message'] || Resources.t('generic_failure_message'));
+      return httpResponse.json();
     });
   }
 
   createInvoice(amount, description = '', curreny = 'SAR') {
     let params = { 'amount': amount, 'description': description, 'currency': curreny };
-
+  console.log('HERE in create !');
     return this.makeRequest('/invoices', 'POST', params);
   }
 
   findInvoice(id) {
-    return this.makeRequest('/invoices' + id.toString(), 'GET');
+    return this.makeRequest('/invoices/' + id.toString(), 'GET');
   }
 
   updateInvoice(id, amount, description, curreny = 'SAR') {
     let params = { 'amount': amount, 'description': description, 'currency': curreny };
 
-    return this.makeRequest('/invoices' + id.toString(), 'PUT', params);
+    return this.makeRequest('/invoices/' + id.toString(), 'PUT', params);
   }
 
   get apiHeaders() {
@@ -169,25 +163,32 @@ Resources.initialize();
 //
 export function obtainInvoiceForUser(amount, description, idToFetch) {
   let client = new apiClient(clientSecretKey);
+  let invoiceId = idToFetch || false;
 
-  if (idToFetch) {
+  if (invoiceId) {
     console.log('its inside despite it is: ');
     console.log(idToFetch);
 
-    client.findInvoice(idToFetch).then((json) => {
+    return client.findInvoice(invoiceId).then((json) => {
+      console.log(invoiceId);
+      console.log(json);
+      let invoice = json;
+
       // when find resulted in existing non paid invoice,
       // match its data by update in case they differ.
-      if (json && !json.type && !json.message) {
-          let invoice = json;
+      if (invoice && !invoice.type && !invoice.message) {
           console.log('invoice prior update');
           console.log(invoice);
 
         if (!client.isInvoicePaid(invoice)) {
+          console.log('Not Paid .. updating ...');
           let isIdentical = client.isInvoiceDataIdentical(invoice, amount, description);
           return (isIdentical ? invoice : client.updateInvoice(invoice.id, amount, description));
+        } else {
+          return client.createInvoice(amount, description);
         }
       }
-    }).catch((error) => { return error; });
+    });
   }
 
   return client.createInvoice(amount, description);
