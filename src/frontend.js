@@ -3,7 +3,7 @@
  * ---------------------------------
  *
  * @description: A Wix script to launch and prepare the invoice generation interface.
- * @filename: moyasar-frontend-ui.js
+ * @filename: frontend.js
  * @author: Abdullah Barrak (Moyasar Team).
  *
  *  All rights reserved. (2017 - 2018)

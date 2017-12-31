@@ -29,14 +29,14 @@ Keep in mind that UI is flexible and should be aligned according to client's req
 ## 2. Add Invoice Generation Code into Web Module
 
 - Create new file in backend section of site with name `moyasarInvoicesModule.jsw`.
-- Copy `moyasar-invoices-app.js` file [here]() to the newly created module in Wix backend.
+- Copy `backend.js` file [here]() to the newly created module in Wix backend.
 - **Ensure to specifying client's API secret key** at the very first line in code using `clientSecretKey` variable.
 
 
 ## 3. Interact via Front-End with Web Module and Finalize Process
 
 - Open the script panel of the user invoicing screen we have built UI for previously.
-- Add the logic from `invoice-frontend-ui.js` [here]().
+- Add the logic from `frontend.js` [here]().
 - Adjust description according to client's specification and needs.
 
 

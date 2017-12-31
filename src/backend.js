@@ -3,7 +3,7 @@
  * -------------------------------
  *
  * @description: A Wix web modules to create and manages invoices resources.
- * @filename: backend/moyasar-invoices-app.js
+ * @filename: backend.js
  * @author: Abdullah Barrak (Moyasar Team).
  *
  *  All rights reserved – (2017)
