@@ -20,7 +20,9 @@ Follow [the guide here](https://github.com/moyasar/moyasar-wix/master/invoices-i
 
 ## Moyasar as Shop Payment Provider
 
-This is not available currently in Wix.
+This is not available currently in Wix store.
+
+(wix-store)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/wix-store.png]
 
 They offer sending [new gateway request to be voted on](https://support.wix.com/en/accepting-payments/setting-up-your-payments#feature-requests), and added if approved though.
 
