@@ -11,7 +11,7 @@ It leverages their Wix Code APIs for the backend and frontend.
 
 ## Installation Guide
 
-Follow [the guide here](https://github.com/moyasar/moyasar-wix/master/invoices-integration.md).
+Follow [the guide here](https://github.com/moyasar/moyasar-wix/master/INTEGRATION.md).
 
 
 ## Moyasar Sample Shop
