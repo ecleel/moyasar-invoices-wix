@@ -14,8 +14,9 @@ import wixWindow from 'wix-window';
 
 $w.onReady(function () {
   let lightboxData = wixWindow.lightbox.getContext();
-
-  $w('#noticeBoxTitle').text = lightboxData.title || "شكراً لكم";
-  $w('#noticeBoxText').text  = lightboxData.text  || "تم إنشاء فاتورة التبرع بنجاح !";
-  $w('#noticeBoxLink').link  = lightboxData.link;
+  if (lightboxData) {
+    $w('#noticeBoxTitle').text = lightboxData.title || "شكراً لكم";
+    $w('#noticeBoxText').text  = lightboxData.text  || "تم إنشاء فاتورة التبرع بنجاح !";
+    $w('#noticeBoxLink').link  = lightboxData.link;
+  }
 });

@@ -72,7 +72,6 @@ function validateInvoiceCommonData(allValid) {
 
 function validateInvoiceAmount(amountNewValue) {
   let isAmountValid = validateNumber(amountNewValue);
-  console.log(amountNewValue);
   if (isAmountValid)
     context.amountValidationMsg.hide();
   else
