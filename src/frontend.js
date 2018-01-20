@@ -9,7 +9,7 @@
  *  All rights reserved. (2017 - 2018)
  */
 
-
+import wixWindow from 'wix-window';
 import {local} from 'wix-storage';
 import {obtainInvoiceForUser} from 'backend/moyasarInvoicesModule';
 
@@ -163,14 +163,21 @@ function presentInvoiceToUser(invoice) {
 
 // When troubles strikes, show the error message from API/backend-module to the user.
 function reportErrorModally(error) {
+  transitionToApologyScreen();
   console.log("[System Error Reporter]: \n" + error);
 }
 
 // Reveal the thank you message widget and hide invoices generation UI upon successful creation.
 function transitionToThanksScreen() {
-
+  wixWindow.openLightbox('thankYouLightbox', { link: context.invoiceLink.link });
 }
 
+function transitionToApologyScreen() {
+  wixWindow.openLightbox(
+    'thankYouLightbox',
+    { link: '', title: "خطأ", text: "نأسف حدث خطأ ما ! يرجى الحاولة مرة أخرى." }
+  );
+}
 
 /**
  *  Event Handlers
