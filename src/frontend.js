@@ -93,10 +93,7 @@ function validateInvoiceName(nameNewValue) {
 }
 
 function validateName(n) {
-  if (n.length > 1)
-    return true;
-  else
-    return false;
+  return n.length > 1 ? true : false;
 }
 
 function validateNumber(x) {
