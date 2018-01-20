@@ -29,8 +29,13 @@ Keep in mind that UI is flexible and should be aligned according to client's req
 ## 2. Add Invoice Generation Code into Web Module
 
 - Create new file in backend section of site with name `moyasarInvoicesModule.jsw`.
+
+(three)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/3.png]
+
 - Copy `backend.js` file [here]() to the newly created module in Wix backend.
 - **Ensure to specifying client's API secret key** at the very first line in code using `clientSecretKey` variable.
+
+(four)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/4.png]
 
 
 ## 3. Interact via Front-End with Web Module and Finalize Process
@@ -38,14 +43,28 @@ Keep in mind that UI is flexible and should be aligned according to client's req
 - Open the script panel of the user invoicing screen we have built UI for previously.
 - Add the logic from `frontend.js` [here]().
 - Adjust description according to client's specification and needs.
+- Set all the needed UI textboxes and buttons with validation and event handlers if any.
 
+(five)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/5.png]
 
-## 4. Publish and Test
+## 4. Design and Code Supporting LightBox UI
+
+Add lighbox widget for user popup upon invoice generation result reception, as the following:
+1. Create new lightbox from Wix toolbox.
+2. Copy [`lightbox_ui.js`]() to the lightbox code panel.
+3. Add three text lables with the names according to `$w` elements in `lightbox_ui.js` file.
+4. Ensure to change lightbox name, and id to `thankYouLightbox`
+5. Specify lightbox settings for not showing automatically and with appropriate background color.
+
+(five)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/5.png]
+(five)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/5.png]
+
+## 5. Publish and Test
 
 Publish the site after steps completed and verify proper functionality with Moyasar Invoices.
 
 
-## 5. Customize
+## 6. Customize
 
 You're likely will have different imaginary view from the customer in regard of UI, message notices, design, etc.
 
