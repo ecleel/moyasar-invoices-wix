@@ -42,7 +42,7 @@ Keep in mind that UI is flexible and should be aligned according to client's req
 
 ## 4. Publish and Test
 
-Publish the Site after steps completed and verify proper functionality with Moyasar Invoices.
+Publish the site after steps completed and verify proper functionality with Moyasar Invoices.
 
 
 ## 5. Customize

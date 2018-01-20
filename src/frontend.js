@@ -21,6 +21,7 @@ var context = {
 $w.onReady(function () {
   loadUI();
   defineTranslations();
+  defineCustomValidations();
 });
 
 
@@ -41,26 +42,76 @@ function defineTranslations() {
   context.resources = {
     en: {
       error: 'Error',
+      notValidAmount: 'Amount number is not valid',
     },
 
     ar: {
       error: 'خطأ',
+      notValidAmount: 'المبلغ المدخل عير صالح. الرجاء إدخال قيمة رقمية بين ٢ و ٥٠٠٠ ريال.',
     }
   };
 }
 
-function validateInvoiceData() {
-  let isNameValid = context.nameField.valid;
-  let isAmountValid = context.amountField.valid;
+function defineCustomValidations() {
+  context.amountField.onChange( (event, $w) => {
+    validateInvoiceAmount(event.target.value);
+  });
+}
 
-  if (isNameValid && isAmountValid) {
+function t(key, lang='ar') {
+  return context.resources[lang][key];
+}
+
+function validateInvoiceCommonData(allValid) {
+  if (allValid) {
     context.generateBtn.enable();
   } else {
     context.generateBtn.disable();
   }
+}
 
-  isNameValid   ? context.nameValidationMsg.hide() : context.nameValidationMsg.show();
-  isAmountValid ? context.amountValidationMsg.hide() : context.amountValidationMsg.show();
+function validateInvoiceAmount(amountNewValue) {
+  let isAmountValid = validateNumber(amountNewValue);
+  console.log(amountNewValue);
+  if (isAmountValid)
+    context.amountValidationMsg.hide();
+  else
+    context.amountValidationMsg.show();
+
+  validateInvoiceCommonData(isAmountValid && context.nameField.valid);
+}
+
+function validateInvoiceName(nameNewValue) {
+  let isNameValid = validateName(nameNewValue);
+
+  if (isNameValid)
+    context.nameValidationMsg.hide();
+  else
+    context.nameValidationMsg.show();
+
+  validateInvoiceCommonData(isNameValid && context.amountField.valid);
+}
+
+function validateName(n) {
+  if (n.length > 1)
+    return true;
+  else
+    return false;
+}
+
+function validateNumber(x) {
+  var parts = x.split(".");
+
+  if (typeof parts[1] == "string" && (parts[1].length == 0 || parts[1].length > 2))
+      return false;
+  var n = parseFloat(x);
+
+  if (isNaN(n))
+      return false;
+  if (n < 2 || n > 5000)
+      return false;
+
+  return true;
 }
 
 function getNormalizedAmount() {
@@ -76,7 +127,7 @@ function getDescription() {
  *  Invoice Generation Processing
  */
 
-function getExistingOrNewInvoice() {
+function getExistingOrNewInvoice(invoiceGenButton) {
   // When it's already available, fetch it from current app/local cache storage,
   // ensuring it's not paid & updated to latest data.
   // Useful for multiple clicks, revisiting user, etc.
@@ -94,7 +145,16 @@ function getExistingOrNewInvoice() {
     local.setItem('moyasar_invoice_id', json['id']);
 
     presentInvoiceToUser(json);
-  }).catch(error => reportErrorModally(error));
+
+    invoiceGenButton.enable();
+    context.invoiceLink.enable();
+
+  }).catch((error) => {
+    reportErrorModally(error);
+
+    invoiceGenButton.enable();
+    context.invoiceLink.enable();
+  });
 }
 
 // Decide how to show invoice upon client requirements
@@ -109,14 +169,22 @@ function reportErrorModally(error) {
   console.log("[System Error Reporter]: \n" + error);
 }
 
+// Reveal the thank you message widget and hide invoices generation UI upon successful creation.
+function transitionToThanksScreen() {
+
+}
+
+
 /**
  *  Event Handlers
  */
 
-export function invoiceAmount_keyPress(event, $w) {
-  validateInvoiceData();
-}
-
 export function openInvoice_click(event, $w) {
-  getExistingOrNewInvoice();
+  var _btn = event.target;
+
+  if (_btn.enabled) {
+    _btn.disable();
+    context.invoiceLink.disable();
+    getExistingOrNewInvoice(_btn);
+  }
 }
