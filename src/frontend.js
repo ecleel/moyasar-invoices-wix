@@ -56,6 +56,10 @@ function defineCustomValidations() {
   context.amountField.onChange( (event, $w) => {
     validateInvoiceAmount(event.target.value);
   });
+
+  context.nameField.onChange( (event, $w) => {
+    validateInvoiceName(event.target.value);
+  });
 }
 
 function t(key, lang='ar') {
@@ -92,7 +96,7 @@ function validateInvoiceName(nameNewValue) {
 }
 
 function validateName(n) {
-  return n.length > 1 ? true : false;
+  return n.replace(/\s/g, "").length > 0 ? true : false;
 }
 
 function validateNumber(x) {
