@@ -13,6 +13,8 @@ import wixWindow from 'wix-window';
 import {local} from 'wix-storage';
 import {obtainInvoiceForUser} from 'backend/moyasarInvoicesModule';
 
+let pageSubDescription = "";
+
 var context = {
   invoiceExsits: false,
   invoice: null
@@ -35,6 +37,7 @@ function loadUI () {
   context.generateBtn         = $w("#openInvoice");
   context.amountValidationMsg = $w("#amountErrMsg");
   context.nameValidationMsg   = $w("#nameErrMsg");
+  context.openInvoice         = $w("#openInvoice");
   context.invoiceLink         = $w("#invoiceLink");
 }
 
@@ -59,6 +62,10 @@ function defineCustomValidations() {
 
   context.nameField.onChange( (event, $w) => {
     validateInvoiceName(event.target.value);
+  });
+
+  context.openInvoice.onClick( (event, $w) => {
+    openInvoice_click(event, $w);
   });
 }
 
@@ -119,7 +126,7 @@ function getNormalizedAmount() {
 }
 
 function getDescription() {
-  return 'Donation Invoice for ' +  context.nameField.value + ' - Charity Organization';
+  return 'Donation Invoice for ' +  context.nameField.value + ' - ' + pageSubDescription;
 }
 
 
