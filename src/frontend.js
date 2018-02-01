@@ -13,7 +13,7 @@ import wixWindow from 'wix-window';
 import {local} from 'wix-storage';
 import {obtainInvoiceForUser} from 'backend/moyasarInvoicesModule';
 
-let pageSubDescription = "";
+var pageSubDescription = "";
 
 var context = {
   invoiceExsits: false,
