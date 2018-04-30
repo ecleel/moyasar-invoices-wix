@@ -1,13 +1,13 @@
 # Moyasar Wix
 
-This is a minimalist plugin to integrate Moyasar Invoices system with Wix Platform.
+This is a minimalist plugin to integrate [Moyasar Invoices](https://moyasar.com) system with Wix Platform.
 
 
 ## Overview
 
 Use this solution to add simple to advanced invoicing system to websites built using Wix.
 
-It leverages their Wix Code APIs for the backend and frontend.
+It leverages Wix Code APIs for the backend and frontend.
 
 ## Installation Guide
 
@@ -24,14 +24,12 @@ This is not available currently in Wix store.
 
 (wix-store)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/wix-store.png]
 
-They offer sending [new gateway request to be voted on](https://support.wix.com/en/accepting-payments/setting-up-your-payments#feature-requests), and added if approved though.
-
 Wix [does not support 3DS](https://support.wix.com/en/article/request-implementing-3d-secure-payments) at the time of writing.
 
 ## TODO
 
-- Add secondary integration path using [wix-users API](https://www.wix.com/code/reference/wix-users.html) for probable future cases.
-- Integrate [wix-router](https://www.wix.com/code/reference/wix-router.html) for notification service to bing client system if needed.
+- Add secondary integration path using [wix-users API](https://www.wix.com/code/reference/wix-users.html) for probable other cases.
+- Integrate [wix-router](https://www.wix.com/code/reference/wix-router.html) for receiving notification service.
 
 ## Licence
 MIT.

@@ -2,7 +2,7 @@
 
 This guide goes through the needed steps to provide Moyasar Invoices in Wix website.
 
-This is useful for entities who are interested in using invoicing solutions such as a donation system.
+This is useful for customers who are interested in using invoicing solutions such as a donation system.
 
 Please ensure to enable Developer tools in Wix prior proceeding with the following steps:
 
@@ -32,7 +32,7 @@ Keep in mind that UI is flexible and should be aligned according to client's req
 
 (three)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/3.png]
 
-- Copy `backend.js` file [here]() to the newly created module in Wix backend.
+- Copy `backend.js` file to the newly created module in Wix backend.
 - **Ensure to specifying client's API secret key** at the very first line in code using `clientSecretKey` variable.
 
 (four)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/4.png]
@@ -41,7 +41,7 @@ Keep in mind that UI is flexible and should be aligned according to client's req
 ## 3. Interact via Front-End with Web Module and Finalize Process
 
 - Open the script panel of the user invoicing screen we have built UI for previously.
-- Add the logic from `frontend.js` [here]().
+- Add the logic from `frontend.js`.
 - Adjust description according to client's specification and needs.
 - Set all the needed UI textboxes and buttons with validation and event handlers if any.
 
@@ -51,7 +51,7 @@ Keep in mind that UI is flexible and should be aligned according to client's req
 
 Add lighbox widget for user popup upon invoice generation result reception, as the following:
 1. Create new lightbox from Wix toolbox.
-2. Copy [`lightbox_ui.js`]() to the lightbox code panel.
+2. Copy `lightbox_ui.js` to the lightbox code panel.
 3. Add three text lables with the names according to `$w` elements in `lightbox_ui.js` file.
 4. Ensure to change lightbox name, and id to `thankYouLightbox`
 5. Specify lightbox settings for not showing automatically and with appropriate background color.
@@ -61,14 +61,14 @@ Add lighbox widget for user popup upon invoice generation result reception, as t
 
 ## 5. Publish and Test
 
-Publish the site after steps completed and verify proper functionality with Moyasar Invoices.
+Publish the site after steps completed and verify it's functioning properly with Moyasar Invoices.
 
 
 ## 6. Customize
 
 You're likely will have different imaginary view from the customer in regard of UI, message notices, design, etc.
 
-In theses cases, use Wix Editor and JavaScript, [HTML Component](https://support.wix.com/en/article/working-with-the-html-component-in-wix-code), even other [Wix Apps from the market](https://www.wix.com/app-market/main) to fulfill the requirements.
+In theses cases, use Wix Editor, JavaScript, [HTML Component](https://support.wix.com/en/article/working-with-the-html-component-in-wix-code), and even other [Wix Apps from the market](https://www.wix.com/app-market/main) to fulfill the requirements.
 
 
 (coding)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/code.jpg]
