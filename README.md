@@ -1,4 +1,4 @@
-# Moyasar Wix
+# Moyasar Invoices for Wix
 
 This is a minimalist plugin to integrate [Moyasar Invoices](https://moyasar.com) system with Wix Platform.
 
