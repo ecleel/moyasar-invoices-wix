@@ -11,7 +11,7 @@ It leverages Wix Code APIs for the backend and frontend.
 
 ## Installation Guide
 
-Follow [the guide here](https://github.com/abarrak/moyasar-wix-invoices/master/INTEGRATION.md).
+Follow [the guide here](https://github.com/abarrak/moyasar-invoices-wix/blob/master/INTEGRATION.md).
 
 
 ## Moyasar as Shop Payment Provider
