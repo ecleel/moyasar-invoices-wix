@@ -11,18 +11,14 @@ It leverages Wix Code APIs for the backend and frontend.
 
 ## Installation Guide
 
-Follow [the guide here](https://github.com/moyasar/moyasar-wix/master/INTEGRATION.md).
+Follow [the guide here](https://github.com/abarrak/moyasar-wix-invoices/master/INTEGRATION.md).
 
-
-## Moyasar Sample Shop
-
-[This is a sample store](https://abarrak.wixsite.com/moyasar-dev-store/sample-invoice) to carry on development and testing.
 
 ## Moyasar as Shop Payment Provider
 
 This is not available currently in Wix store.
 
-(wix-store)[https://raw.githubusercontent.com/moyasar/moyasar-wix/master/images/wix-store.png]
+![wix-store](https://raw.githubusercontent.com/abarrak/moyasar-invoices-wix/master/images/wix-store.png)
 
 Wix [does not support 3DS](https://support.wix.com/en/article/request-implementing-3d-secure-payments) at the time of writing.
 
